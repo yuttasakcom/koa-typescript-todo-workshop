@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+      MONGO_USER_USERNAME: user
+      MONGO_USER_PASSWORD: password
+      MONGO_USER_DATABASE: db_todos
+    command: --auth
+    ports:
+      - '27017:27017'
+    volumes:
+      - todos_db:/data/db
+      - ./mongodb/setup:/setup
+    networks:
+      - todos-net
+    restart: always
+
+networks:
+  todos-net:
+
+volumes:
+  todos_db:
